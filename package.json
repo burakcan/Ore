@@ -1,0 +1,39 @@
+{
+  "name": "orejs",
+  "description": "Stateful Stores that are tuned for high performance by utilizing Immutablejs and internal emit loop, for your Flux applications.",
+  "version": "0.1.0",
+  "author": "Burak Can <neoberg@gmail.com>",
+  "licence": "GPL-3.0",
+  "main": "ore.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/burakcan/Ore"
+  },
+  "bugs": {
+    "url": "https://github.com/burakcan/Ore/issues"
+  },
+  "keywords" : [
+    "flux",
+    "store",
+    "immutable",
+    "data",
+    "performance",
+    "react"
+  ],
+  "scripts": {
+    "test" : "./node_modules/karma/bin/karma start"
+  },
+  "dependencies": {
+    "immutable": "3.7.3",
+    "flux": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "karma": "^0.12.31",
+    "karma-browserify": "^4.1.2",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-mocha": "^0.1.10",
+    "mocha": "^2.2.4"
+  }
+}
