@@ -1,4 +1,4 @@
-module.exports = function(){
+module.exports = (function(){
   'use strict';
 
   var Immutable    = require('immutable');
@@ -17,7 +17,7 @@ module.exports = function(){
     this._dispatchToken = Dispatcher.register(this._handleDispatch.bind(this));
     this._cache         = {};
     this.state          = this._initialState;
-    options.cache       = (typeof options.cache != 'undefined') ? options.cache : true;
+    options.cache       = (typeof options.cache !== 'undefined') ? options.cache : true;
 
     if (options.cache) {
       for (var method in options.methods) {
@@ -109,17 +109,21 @@ module.exports = function(){
   Ore._providers    = {};
 
   Ore.createStore = function(options, Dispatcher){
-    if (!Dispatcher)
+    if (!Dispatcher) {
+      /*jshint multistr: true */
       throw 'You should pass a compatible Dispatcher instance to Ore.createStore. \
       For more information: https://facebook.github.io/flux/docs/dispatcher.html';
+    }
 
     var store = new Ore(options, Dispatcher);
 
     Ore._stores[store._id] = store;
 
     for (var key in options.initialState){
-      Ore._providers[key] = store._id;
-    };
+      if (options.initialState.hasOwnProperty(key)){
+        Ore._providers[key] = store._id;
+      }
+    }
 
     store._emitter.on('_change', function(){
       if (!Ore._pendingEmit.includes(store._id)){
@@ -140,7 +144,7 @@ module.exports = function(){
       this._cache[stateHash]        = this._cache[stateHash] || {};
       this._cache[stateHash][name]  = this._cache[stateHash][name] || {};
 
-      if (typeof this._cache[stateHash][name][hash] != 'undefined') {
+      if (typeof this._cache[stateHash][name][hash] !== 'undefined') {
         return this._cache[stateHash][name][hash];
       }
 
@@ -172,7 +176,10 @@ module.exports = function(){
     },
 
     refreshState: function(){
-      if (!this.isMounted()) return false;
+      if (!this.isMounted()) {
+        return false;
+      }
+      
       return this.setState(this.getOreData());
     },
 
@@ -195,7 +202,7 @@ module.exports = function(){
       requiredKeys.forEach(function(key){
         var providerId = Ore._providers[key];
 
-        if (storeIds.indexOf(providerId) == -1){
+        if (storeIds.indexOf(providerId) === -1){
           storeIds.push(providerId);
         }
       });
@@ -212,7 +219,7 @@ module.exports = function(){
       requiredKeys.forEach(function(key){
         var providerId = Ore._providers[key];
 
-        if (storeIds.indexOf(providerId) == -1){
+        if (storeIds.indexOf(providerId) === -1){
           storeIds.push(providerId);
         }
       });
@@ -229,4 +236,4 @@ module.exports = function(){
     Mixin       : Ore.Mixin,
     __Ore       : Ore
   };
-}();
+}());
