@@ -1,7 +1,7 @@
 {
   "name": "orejs",
   "description": "Stateful Stores that are tuned for high performance by utilizing Immutablejs and internal emit loop, for your Flux applications.",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "Burak Can <neoberg@gmail.com>",
   "licence": "GPL-3.0",
   "main": "ore.js",

@@ -13,7 +13,7 @@ module.exports = function(){
     this._emitter       = new EventEmitter();
     this._initialState  = Immutable.Map(options.initialState || {});
     this._interestedIn  = Immutable.Map(options.interestedIn || {});
-    this._id            = Math.random() * Date.now();
+    this._id            = options.name || Math.random() * Date.now();
     this._dispatchToken = Dispatcher.register(this._handleDispatch.bind(this));
     this._cache         = {};
     this.state          = this._initialState;
@@ -107,6 +107,10 @@ module.exports = function(){
   Ore._stores       = {};
   Ore._pendingEmit  = Immutable.List();
   Ore._providers    = {};
+
+  Ore.getStore = function(name){
+    return Ore._stores[name];
+  }
 
   Ore.createStore = function(options, Dispatcher){
     if (!Dispatcher)
@@ -225,6 +229,7 @@ module.exports = function(){
 
   return {
     createStore : Ore.createStore,
+    getStore    : Ore.getStore,
     ACTION      : ACTION,
     Mixin       : Ore.Mixin,
     __Ore       : Ore
